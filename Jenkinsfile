@@ -10,10 +10,6 @@ label params.NODE_LABEL || 'node-2004'
 } 
 environment {
  def mvnHome = tool 'maven'
-	    // holds reference to docker image
-	    def dockerImage
-	    // ip address of the docker private repository(nexus)
-	    def dockerImageTag = "sbexample${env.BUILD_NUMBER}"
 }
 stages {
 	    // reference to maven
