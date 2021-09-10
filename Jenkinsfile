@@ -8,9 +8,7 @@ pipeline{
 agent{
 label params.NODE_LABEL || 'node-2004'
 } 
-environment {
- def mvnHome = tool 'maven'
-}
+
 stages {
 	    // reference to maven
 	    // ** NOTE: This 'maven-3.5.2' Maven tool must be configured in the Jenkins Global Configuration.   
