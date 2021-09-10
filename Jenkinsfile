@@ -4,9 +4,11 @@ pipeline{
  string(name: 'IMAGE_NAME', defaultValue: 'sbexample:latest', description: 'This is the name of the docker image on which tests will be executed')
  booleanParam(name: 'E2E_TESTS', defaultValue: true, description: 'Check to run the e2e tests')
  booleanParam(name: 'ACCEPTANCE_TESTS', defaultValue: false, description: 'Check to run the e2e tests')
- }   
-
-node (params.NODE_LABEL) {
+ }  
+agent{
+label params.NODE_LABEL || 'node-2004'
+} 
+stages {
 	    // reference to maven
 	    // ** NOTE: This 'maven-3.5.2' Maven tool must be configured in the Jenkins Global Configuration.   
 	    def mvnHome = tool 'maven'
