@@ -23,6 +23,7 @@ public class SimpleCalculatorE2ETest {
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForAddition.class)
 	public void testAdd(long a,long b, long c) throws Exception {
+		Thread.sleep(10000);
 		String endpoint = "/addition";
 		InputEntity entity = new InputEntity();
 		entity.setA(a);
@@ -40,6 +41,7 @@ public class SimpleCalculatorE2ETest {
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForSubtraction.class)
 	public void testSubtraction(long a,long b, long c) throws Exception {
+		Thread.sleep(10000);
 		String endpoint = "/subtraction";
 		InputEntity entity = new InputEntity();
 		entity.setA(a);
@@ -57,6 +59,7 @@ public class SimpleCalculatorE2ETest {
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForMultiplication.class)
 	public void testMultiplication(long a,long b, long c) throws Exception {
+		Thread.sleep(10000);
 		String endpoint = "/multiplication";
 		InputEntity entity = new InputEntity();
 		entity.setA(a);
@@ -74,6 +77,7 @@ public class SimpleCalculatorE2ETest {
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForDivision.class)
 	public void testDivision(long a,long b, long c) throws Exception {
+		Thread.sleep(10000);
 		String endpoint = "/division";
 		InputEntity entity = new InputEntity();
 		entity.setA(a);
@@ -90,6 +94,7 @@ public class SimpleCalculatorE2ETest {
 	
 	@Test
 	public void testDivideByeroError() throws Exception {
+		Thread.sleep(10000);
 		String endpoint = "/division";
 		InputEntity entity = new InputEntity();
 		entity.setA(10);
