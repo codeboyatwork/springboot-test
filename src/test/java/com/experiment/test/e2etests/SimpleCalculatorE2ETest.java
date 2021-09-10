@@ -18,7 +18,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class SimpleCalculatorE2ETest {
-	private final String BASE_URL = "http://localhost:8080";
+	private final String BASE_URL = "http://localhost:8081";
 	
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForAddition.class)
