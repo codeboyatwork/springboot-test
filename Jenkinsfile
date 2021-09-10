@@ -28,6 +28,14 @@ stages {
 	      	sh "docker run --name sbexample_e2e -d -p 2222:2222 -p 8081:8080 tanmaydeshmukh1/${params.IMAGE_NAME}"
 	      }
 	    }
+	    stage('Wait for Container to load') {
+	    when {
+	      	expression {params.E2E_TESTS == true}
+	      }
+	      steps {
+	      	sleep 60
+	      }
+	    }
 	    stage('Run E2E Tests') {
 	      // build project via maven
 	      when {
