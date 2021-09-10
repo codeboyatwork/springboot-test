@@ -10,7 +10,6 @@ label 'node-2004'
  }  
 environment{
 mvnHome = tool name: 'maven'
-undeploy = false
 }
 stages {
 	    // reference to maven
@@ -27,7 +26,6 @@ stages {
 	      }
 	      steps {
 	      	sh "docker run --name sbexample_e2e -d -p 2222:2222 -p 8081:8080 tanmaydeshmukh1/${params.IMAGE_NAME}"
-	      	undeploy = true
 	      }
 	    }
 	    stage('Run E2E Tests') {
@@ -41,7 +39,7 @@ stages {
 	    }
 	    stage('Cleanup for E2E Tests') {
 	    when {
-	      	expression {undeploy == true || params.E2E_TESTS == true}
+	      	expression {params.E2E_TESTS == true}
 	      }
 	      steps {
 	      	sh "docker rm -f sbexample_e2e"
