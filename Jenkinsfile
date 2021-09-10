@@ -8,8 +8,8 @@ label params.NODE_LABEL || 'node-2004'
  booleanParam(name: 'E2E_TESTS', defaultValue: true, description: 'Check to run the e2e tests')
  booleanParam(name: 'ACCEPTANCE_TESTS', defaultValue: false, description: 'Check to run the e2e tests')
  }  
-tools{
-mvnHome = tool 'maven'
+environment{
+mvnHome = tool name: 'maven'
 }
 stages {
 	    // reference to maven
