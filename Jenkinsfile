@@ -20,14 +20,30 @@ stages {
 	      
 	     }	      
 	    } 
+	    stage('Deploy E2E Container') {
+	    when {
+	      	expression {params.E2E_TESTS == true}
+	      }
+	      steps {
+	      	sh "docker run --name sbexample_e2e -d -p 2222:2222 -p 8081:8080 tanmaydeshmukh1/${params.IMAGE_NAME}"
+	      }
+	    }
 	    stage('Run E2E Tests') {
 	      // build project via maven
 	      when {
 	      	expression {params.E2E_TESTS == true}
 	      }
 	      steps {
-	      	sh "'${mvnHome}/bin/mvn' clean test -Dtest=com.experiment.tests.e2etests.**.*Test*"
+	      	sh "'${mvnHome}/bin/mvn' clean test -Dtest=com.experiment.test.e2etests.**.*Test*"
 	      }    
+	    }
+	    stage('Cleanup for E2E Tests') {
+	    when {
+	      	expression {params.E2E_TESTS == true}
+	      }
+	      steps {
+	      	sh "docker rm -f sbexample_e2e"
+	      }
 	    } 
 	    stage('Run Acceptance Tests') {
 	      // build project via maven
