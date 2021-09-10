@@ -28,7 +28,7 @@ stages {
 	      	sh "docker run --name sbexample_e2e -d -p 2222:2222 -p 8081:8080 tanmaydeshmukh1/${params.IMAGE_NAME}"
 	      }
 	    }
-	    stage('Wait for Container to load') {
+	    stage('Wait for E2E Container to load') {
 	    when {
 	      	expression {params.E2E_TESTS == true}
 	      }
@@ -53,6 +53,22 @@ stages {
 	      	sh "docker rm -f sbexample_e2e"
 	      }
 	    } 
+	    stage('Deploy Acceptance Container') {
+	    when {
+	      	expression {params.ACCEPTANCE_TESTS == true}
+	      }
+	      steps {
+	      	sh "docker run --name sbexample_acceptance -d -p 2222:2222 -p 8082:8080 tanmaydeshmukh1/${params.IMAGE_NAME}"
+	      }
+	    }
+	    stage('Wait for Acceptance Container to load') {
+	    when {
+	      	expression {params.ACCEPTANCE_TESTS == true}
+	      }
+	      steps {
+	      	sleep 60
+	      }
+	    }
 	    stage('Run Acceptance Tests') {
 	      // build project via maven
 	      when {
@@ -62,6 +78,14 @@ stages {
 	      	sh "'${mvnHome}/bin/mvn' clean test -Dtest=com.experiment.demo.acceptancetests.**.*Test*"
 	      }
 	      
+	    } 
+	    stage('Cleanup for Acceptance Tests') {
+	    when {
+	      	expression {params.ACCEPTANCE_TESTS == true}
+	      }
+	      steps {
+	      	sh "docker rm -f sbexample_acceptance"
+	      }
 	    }   
 }
 }
