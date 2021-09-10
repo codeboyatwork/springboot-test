@@ -15,9 +15,10 @@ stages {
 	   
 	    
 	    stage('Clone Repo') { 
+	    mvnHome = tool 'maven'
 	     steps {
 	      git 'https://github.com/codeboyatwork/springboot-test.git'        
-	      mvnHome = tool 'maven'
+	      
 	     }	      
 	    } 
 	    stage('Run E2E Tests') {
