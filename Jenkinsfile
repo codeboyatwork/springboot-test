@@ -8,25 +8,23 @@ pipeline{
 agent{
 label params.NODE_LABEL || 'node-2004'
 } 
-stages {
-	    // reference to maven
-	    // ** NOTE: This 'maven-3.5.2' Maven tool must be configured in the Jenkins Global Configuration.   
-	    def mvnHome = tool 'maven'
-	
-
+environment {
+ def mvnHome = tool 'maven'
 	    // holds reference to docker image
 	    def dockerImage
 	    // ip address of the docker private repository(nexus)
-	 
 	    def dockerImageTag = "sbexample${env.BUILD_NUMBER}"
+}
+stages {
+	    // reference to maven
+	    // ** NOTE: This 'maven-3.5.2' Maven tool must be configured in the Jenkins Global Configuration.   
+	   
 	    
-	    stage('Clone Repo') { // for display purposes
-	      // Get some code from a GitHub repository
-	      git 'https://github.com/codeboyatwork/springboot-test.git'
-	      // Get the Maven tool.
-	      // ** NOTE: This 'maven-3.5.2' Maven tool must be configured
-	      // **       in the global configuration.           
+	    stage('Clone Repo') { 
+	     steps {
+	      git 'https://github.com/codeboyatwork/springboot-test.git'        
 	      mvnHome = tool 'maven'
+	     }	      
 	    } 
 	    stage('Run E2E Tests') {
 	      // build project via maven
