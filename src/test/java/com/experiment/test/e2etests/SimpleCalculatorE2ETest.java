@@ -2,6 +2,10 @@ package com.experiment.test.e2etests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -18,7 +22,22 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class SimpleCalculatorE2ETest {
-	private final String BASE_URL = "http://localhost:8081";
+	private String BASE_URL = "http://localhost:8081";
+	
+	public SimpleCalculatorE2ETest() throws IOException {
+		try {
+		java.io.InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("app.properties");
+		java.util.Properties properties = new Properties();
+		properties.load(inputStream);
+		BASE_URL = properties.getProperty("app.url");
+		}
+		catch(Exception e) {
+		FileInputStream inputStream =  new FileInputStream("src/test/resources/app.properties");
+		java.util.Properties properties = new Properties();
+		properties.load(inputStream);
+		BASE_URL = properties.getProperty("app.url");
+		}
+	}
 	
 	@ParameterizedTest
 	@ArgumentsSource(ProvideIntsForAddition.class)
